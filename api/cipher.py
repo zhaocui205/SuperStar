@@ -1,12 +1,11 @@
 # -*- coding:utf-8 -*-
-# -*- coding: utf-8 -*-
 import base64
 import pyaes
 from api.config import GlobalConst as gc
 
 
 def pkcs7_unpadding(string):
-    return string[0:-ord(string[-1])]
+    return string[0 : -ord(string[-1])]
 
 
 def pkcs7_padding(s, block_size=16):
@@ -29,15 +28,15 @@ def split_to_data_blocks(byte_str, block_size=16):
     return blocks
 
 
-class AESCipher():
+class AESCipher:
     def __init__(self):
         self.key = str(gc.AESKey).encode("utf8")
         self.iv = str(gc.AESKey).encode("utf8")
 
     def encrypt(self, plaintext: str):
-        ciphertext = b''
+        ciphertext = b""
         cbc = pyaes.AESModeOfOperationCBC(self.key, self.iv)
-        plaintext = plaintext.encode('utf-8')
+        plaintext = plaintext.encode("utf-8")
         blocks = split_to_data_blocks(pkcs7_padding(plaintext))
         for b in blocks:
             ciphertext = ciphertext + cbc.encrypt(b)
